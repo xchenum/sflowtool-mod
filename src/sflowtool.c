@@ -598,9 +598,14 @@ static void writeFlowLine(SFSample *sample)
 
 static void writeCountersLine(SFSample *sample)
 {
+  gettimeofday(&tv,NULL);
+
   // source
   char agentIP[51];
-  printf("CNTR,%s,", printAddress(&sample->agent_addr, agentIP, 50));
+  printf("CNTR,%d.%06d,%s,", 
+	tv.tv_sec,
+	tv.tv_usec,	
+	printAddress(&sample->agent_addr, agentIP, 50));
   printf("%u,%u,%"PRIu64",%u,%u,%"PRIu64",%u,%u,%u,%u,%u,%u,%"PRIu64",%u,%u,%u,%u,%u,%u\n",
 	 sample->ifCounters.ifIndex,
 	 sample->ifCounters.ifType,
