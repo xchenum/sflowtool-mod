@@ -538,11 +538,17 @@ int sampleFilterOK(SFSample *sample)
   -----------------___________________________------------------
 */
 
+struct timeval tv;
+
 static void writeFlowLine(SFSample *sample)
 {
+  gettimeofday(&tv,NULL);
+
   char agentIP[51], srcIP[51], dstIP[51];
   // source
-  printf("FLOW,%s,%d,%d,",
+  printf("FLOW,%d.%06d,%s,%d,%d,",
+     tv.tv_sec,
+     tv.tv_usec,
 	 printAddress(&sample->agent_addr, agentIP, 50),
 	 sample->inputPort,
 	 sample->outputPort);
